@@ -10,8 +10,9 @@
 #    writes has the package's version in an absolute path, which a new
 #    revision breaks;
 #  - lib/libcarla_native-plugin.so links to the dummy Carla library in
-#    lib/lmms/optional/, which the Carla plugins need and the loader does not
-#    search (a build with the CMake change in plugins/Carla* does not need it).
+#    lib/lmms/optional/, and lib/libcarlabase.so to libcarlabase.so, which the
+#    Carla plugins need and the loader does not search (a build with the CMake
+#    change in plugins/Carla* does not need them).
 set -e
 in="$1"; rev="$2"
 [ -f "$in" ] && [ -n "$rev" ] || { sed -n '2,15p' "$0"; exit 1; }
@@ -25,6 +26,7 @@ sed -i "s/^\(\tlmms = 1\.3\.0~[0-9]*\)-[0-9]*/\1/" .PackageInfo
 ln -sf ../apps/LMMS/bin/LMMS bin/lmms
 mkdir -p lib
 ln -sf ../apps/LMMS/lib/lmms/optional/libcarla_native-plugin.so lib/libcarla_native-plugin.so
+ln -sf ../apps/LMMS/lib/lmms/libcarlabase.so lib/libcarlabase.so
 ver=$(sed -n 's/^version[[:space:]]*//p' .PackageInfo | head -1)
 out="$(dirname "$in")/lmms-$ver-x86_64.hpkg"
 package create -C . "$out"
