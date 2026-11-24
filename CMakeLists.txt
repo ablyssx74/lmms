@@ -423,6 +423,11 @@ IF(WANT_CARLA)
 	IF(CARLA_FOUND)
 		SET(LMMS_HAVE_CARLA TRUE)
 		SET(STATUS_CARLA "OK")
+	ELSEIF(LMMS_BUILD_HAIKU)
+		# There is no Carla for Haiku: the dummy library the weak linking
+		# would build makes the plugins load and then crash when one is
+		# added to a track.
+		SET(STATUS_CARLA "not built (no Carla for Haiku)")
 	ELSE(CARLA_FOUND)
 		SET(LMMS_HAVE_WEAKCARLA TRUE)
 		SET(STATUS_CARLA "OK (weak linking enabled)")

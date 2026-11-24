@@ -21,12 +21,6 @@ if(LMMS_HAVE_WEAKCARLA)
     RUNTIME DESTINATION "${PLUGIN_DIR}/optional"
   )
   SET(CARLA_LIBRARIES ${CARLA_NATIVE_LIB})
-  IF(LMMS_BUILD_HAIKU)
-    # The dummy library is installed in optional/, which the loader does not
-    # search: the Carla plugins find it, and each other, next to themselves.
-    SET(CARLA_RPATH "$ORIGIN:$ORIGIN/optional")
-    SET(CARLA_RPATH ${CARLA_RPATH} PARENT_SCOPE)
-  ENDIF()
   # Set parent scope variables so carlarack and carlapatchbay can see them
   SET(CARLA_LIBRARIES ${CARLA_LIBRARIES} PARENT_SCOPE)
 endif()
